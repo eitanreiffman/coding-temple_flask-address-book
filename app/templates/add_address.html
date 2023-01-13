@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %} Add Address {% endblock title %}
+
+{% block content %}
+
+<form action="" class="bg-dark-subtle rounded p-4" method="POST">
+
+    <h1 class="text-center">Add a New Address To Our Database</h1>
+
+    {{ form.csrf_token }}
+
+    {{ form.address.label }}
+    {{ form.address(class='form-control', placeholder='Enter New Address') }}
+
+    {{ form.submit(class='btn btn-dark w-100 mt-3') }}
+
+</form>
+
+{% endblock content %}
