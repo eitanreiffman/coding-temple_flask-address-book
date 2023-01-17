@@ -18,4 +18,4 @@ class LoginForm(FlaskForm):
 
 class PostForm(FlaskForm):
     address = StringField('Address', validators=[InputRequired()])
-    submit = SubmitField
+    submit = SubmitField()

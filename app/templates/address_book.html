@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %} Address Book {% endblock title %}
+
+{% block content %}
+
+<h1 class="text-center text-light mt-5 mb-4">Here's Your Address Book!</h1>
+
+    {% for address in current_user.addresses %}
+
+    <h1 class="text-center text-light">{{ address.address }}</h1>
+
+    {% endfor %}
+
+{% endblock content %}

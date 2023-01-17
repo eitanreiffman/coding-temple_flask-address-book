@@ -28,29 +28,29 @@ def signup():
 
         new_user = User(first_name=first_name, last_name=last_name, email=email, username=username, password=password)
 
-        flash(f'Thank you, {new_user.first_name} {new_user.last_name}, for signing up! \nNow, you can add an address!', 'success')
+        flash(f'Thank you, {new_user.first_name} {new_user.last_name}, for signing up! \nLog in to your account and add an address!', 'success')
 
-        return redirect(url_for('index'))
+        return redirect(url_for('login'))
 
-    return render_template('signup.html', form = form)
+    return render_template('signup.html', form=form)
 
 @app.route('/login', methods=['GET','POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
         username = form.username.data
-        password = form.username.data
+        password = form.password.data
 
         user = User.query.filter_by(username=username).first()
         if user is not None and user.check_password(password):
             login_user(user)
-            flash(f"Hurray! {user.username} is now logged in", "success")
+            flash(f"Hurray! {user.username}, you're now logged in", "success")
             return redirect(url_for('index'))
         else:
             flash("Incorrect username and/or password", "danger")
             redirect(url_for('login'))
 
-    return render_template('login.html', form = form)
+    return render_template('login.html', form=form)
 
 @app.route('/logout')
 def logout():
@@ -65,5 +65,10 @@ def add_address():
     if form.validate_on_submit():
         address = form.address.data
         new_address = Post(address=address, user_id=current_user.id)
-        flash(f"Your address, {new_address.address}, has been successfully added to our system!", "success")
-    return render_template('add_address.html', form = form)
+        flash(f"Your address, {new_address.address}, has been added to your address book!", "success")
+    return render_template('add_address.html', form=form)
+
+@app.route('/address_book')
+def address_book():
+    addresses = Post.query.all()
+    return render_template('address_book.html', addresses=addresses)

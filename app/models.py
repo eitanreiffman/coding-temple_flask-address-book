@@ -11,6 +11,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(50), nullable=False, unique=True)
     password = db.Column(db.String(256), nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    addresses = db.relationship('Post', backref = 'homeowner', lazy = 'dynamic')
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -41,3 +42,15 @@ class Post(db.Model):
     
     def __repr__(self):
         return f"<Address: {self.id} | {self.address}>"
+
+    def update(self, **kwargs):
+        for key, value in kwargs.items():
+            if key in {'title', 'body'}:
+                setattr(self, key, value)
+        db.session.commit()
+    
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    
