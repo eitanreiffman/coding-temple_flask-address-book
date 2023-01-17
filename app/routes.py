@@ -85,16 +85,9 @@ def delete_address(post_id):
 def edit_address(post_id):
     address_obj = Post.query.get(post_id)
     form = PostForm()
-    print(address_obj.address)
-    if form.validate_on_submit:
+    if form.validate_on_submit():
         new_address = form.address.data
         address_obj.update(address=new_address)
         flash("Your address has been updated!", "warning")
-        redirect(url_for('index'))
-
-    # if form.validate_on_submit:
-    #     new_address = form.address.data
-    #     address.update(address=new_address)
-    #     flash("Your address has been updated!", "warning")
-    #     return redirect(url_for('address_book'))
+        return redirect(url_for('address_book'))
     return render_template('edit_address.html', form=form)
