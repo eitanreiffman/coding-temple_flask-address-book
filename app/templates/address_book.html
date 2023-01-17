@@ -8,8 +8,12 @@
 
     {% for address in current_user.addresses %}
 
-    <h1 class="text-center text-light">{{ address.address }}</h1>
+    <input class="form-control mb-2 bg-info fw-bold" type="text" value="{{ address.address }}" aria-label="{{ address.address }}" readonly>
+    <a href="{{ url_for('delete_address', post_id=address.id) }}" type="button" class="btn btn-danger mb-2">Delete Address</a>
+    <a href="{{ url_for('edit_address', post_id=address.id) }}" type="button" class="btn btn-warning mb-2">Edit Address</a>
 
     {% endfor %}
+
+    <h1 class="text-center text-light">Click <a href="/add_address">here</a> to add an address!</h1>
 
 {% endblock content %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %} Edit Address {% endblock title %}
+
+{% block content %}
+
+<h1 class="text-center text-light mt-5 mb-4">Edit Your Address</h1>
+
+<form action="" class="bg-info rounded mt-4 p-5" method="POST">
+
+    {{ form.csrf_token }}
+
+    {{ form.address.label }}
+    {{ form.address(class='form-control', placeholder='Enter New Address') }}
+
+    {{ form.submit(class='btn btn-light w-100 mt-3') }}
+
+</form>
+
+{% endblock content %}

@@ -66,9 +66,35 @@ def add_address():
         address = form.address.data
         new_address = Post(address=address, user_id=current_user.id)
         flash(f"Your address, {new_address.address}, has been added to your address book!", "success")
+        return redirect(url_for('address_book'))
     return render_template('add_address.html', form=form)
 
 @app.route('/address_book')
 def address_book():
     addresses = Post.query.all()
     return render_template('address_book.html', addresses=addresses)
+
+@app.route('/address_book/<post_id>/delete_address')
+def delete_address(post_id):
+    address = Post.query.get(post_id)
+    address.delete()
+    flash(f"The address {address.address} has been deleted from your address book.")
+    return redirect(url_for('address_book', address=address))
+
+@app.route('/address_book/<post_id>/edit_address', methods=['GET', 'POST'])
+def edit_address(post_id):
+    address_obj = Post.query.get(post_id)
+    form = PostForm()
+    print(address_obj.address)
+    if form.validate_on_submit:
+        new_address = form.address.data
+        address_obj.update(address=new_address)
+        flash("Your address has been updated!", "warning")
+        redirect(url_for('index'))
+
+    # if form.validate_on_submit:
+    #     new_address = form.address.data
+    #     address.update(address=new_address)
+    #     flash("Your address has been updated!", "warning")
+    #     return redirect(url_for('address_book'))
+    return render_template('edit_address.html', form=form)

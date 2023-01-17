@@ -45,7 +45,7 @@ class Post(db.Model):
 
     def update(self, **kwargs):
         for key, value in kwargs.items():
-            if key in {'title', 'body'}:
+            if key in {'address'}:
                 setattr(self, key, value)
         db.session.commit()
     
